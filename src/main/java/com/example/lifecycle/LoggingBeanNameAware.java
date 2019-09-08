@@ -5,9 +5,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * Implementing these interfaces will couple the code to the Spring framework
@@ -15,7 +17,7 @@ import javax.annotation.PostConstruct;
  */
 @Flogger
 @Component
-public class LoggingBeanNameAware implements BeanNameAware, BeanFactoryAware {
+public class LoggingBeanNameAware implements BeanNameAware, BeanFactoryAware, DisposableBean {
     private BeanFactory beanFactory;
 
     @Override
@@ -36,5 +38,16 @@ public class LoggingBeanNameAware implements BeanNameAware, BeanFactoryAware {
         } catch (BeansException ignored) {
             log.atInfo().log("The bean could not be created");
         }
+    }
+
+    @PreDestroy
+    public void destroyMe(){
+        log.atInfo().log("Destroy with annotation!!!");
+
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        log.atInfo().log("Destroy with interface!!!");
     }
 }
