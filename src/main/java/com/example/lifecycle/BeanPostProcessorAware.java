@@ -10,13 +10,17 @@ import org.springframework.stereotype.Component;
 public class BeanPostProcessorAware implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        log.atInfo().log("postProcessBeforeInitialization:%s", beanName);
+        if (beanName.equals("loggingBeanAware")) {
+            log.atInfo().log("BeanPostProcessorAware.postProcessBeforeInitialization:%s", beanName);
+        }
         return bean;
     }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        log.atInfo().log("postProcessAfterInitialization:%s", beanName);
+        if (beanName.equals("loggingBeanAware")) {
+            log.atInfo().log("BeanPostProcessorAware.postProcessAfterInitialization:%s", beanName);
+        }
         return bean;
     }
 }

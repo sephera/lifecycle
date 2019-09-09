@@ -17,12 +17,12 @@ import javax.annotation.PreDestroy;
  */
 @Flogger
 @Component
-public class LoggingBeanNameAware implements BeanNameAware, BeanFactoryAware, DisposableBean {
+public class LoggingBeanAware implements BeanNameAware, BeanFactoryAware, DisposableBean {
     private BeanFactory beanFactory;
 
     @Override
     public void setBeanName(String name) {
-        log.atInfo().log("Init:%s", name);
+        log.atInfo().log("LoggingBeanAware:setBeanName:%s", name);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class LoggingBeanNameAware implements BeanNameAware, BeanFactoryAware, Di
     @PostConstruct
     public void init() {
         try {
-            LoggingBeanNameAware bean = beanFactory.getBean(LoggingBeanNameAware.class);
-            log.atInfo().log("Init ok! %s", bean.toString());
+            LoggingBeanAware bean = beanFactory.getBean(LoggingBeanAware.class);
+            log.atInfo().log("LoggingBeanAware.PostConstructInit ok! %s", bean.toString());
         } catch (BeansException ignored) {
             log.atInfo().log("The bean could not be created");
         }
